@@ -38,14 +38,14 @@ public class StudentController {
 		return "listar";
 	}
 	
-	@GetMapping("/alumno"+"/agregarAlumno")
+	@GetMapping("/agregarAlumno")
 	public String formAlu(Model model) {
 		
 		model.addAttribute("titulo", "Agregar Alumnos"); 
 		return "agregarAlumno"; 
 	}
 	
-	@PostMapping("/alumno"+"/agregarAlumno")
+	@PostMapping("/agregarAlumno")
 	public String agregarAlu(Model model,
 			@RequestParam(name="nombre") String nombre,
 			@RequestParam String apellido) {
