@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${titulo}"></title>
+</head>
+<body>
+	<h3>Alumno Agregado</h3>
+	<ul>
+		<li th:text="${alumno.nombre}"></li>
+		<li th:text="${alumno.apellido}"></li>
+	</ul>
+</body>
+</html>
