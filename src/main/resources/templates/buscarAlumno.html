@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+</head>
+
+<body>
+	<form th:action="@{/buscarAlumno}" th:object="${alumno}" method="POST">
+		<h1 th:text="${titulo}"></h1>
+		<div>
+			<label for="idAlumno">ID Alumno</label>
+			<div>
+				<input type="text" id="idAlumno" th:field="${alumno.idAlumno}">
+			</div>
+			<div th:if="${#fields.hasErrors('idAlumno')}" th:errors="${idAlumno}"></div>
+		</div>
+		<div>
+			<div>
+				<input type="submit" value="Buscar">
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>

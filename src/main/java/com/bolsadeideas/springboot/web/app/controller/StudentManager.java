@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
 import com.bolsadeideas.springboot.web.app.models.Alumno;
 import com.bolsadeideas.springboot.web.app.utils.ConnectionManager;
 
@@ -17,7 +15,7 @@ import com.bolsadeideas.springboot.web.app.utils.ConnectionManager;
 
 public class StudentManager {
 
-    private static final String SQL_INSERT = "INSERT INTO alumno (idalumno, nombre, apellido) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO alumno (nombre, apellido) VALUES (?, ?)";
     private static final String SQL = "SELECT * FROM alumno";
     private static final String SQL_DELETE = "DELETE FROM alumno WHERE idalumno=?";
     private static final String SQL_MODIFY = "UPDATE alumno SET nombre=?, apellido=? WHERE idalumno=?";
@@ -47,20 +45,41 @@ public class StudentManager {
         return Collections.EMPTY_LIST; 
     }
 
-    public void add(String nombre, String apellido) {
+    public Alumno add(String nombre, String apellido) throws SQLException{
 
         try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement preparestatement = conn.prepareStatement(SQL_INSERT)) {
+                PreparedStatement preparestatement = conn.prepareStatement(SQL_INSERT,
+                        Statement.RETURN_GENERATED_KEYS)) {
         	
         	StudentManager studentManager = new StudentManager(); 
-            preparestatement.setInt(1, studentManager.generarCodigo());
-            preparestatement.setString(2, nombre);
-            preparestatement.setString(3, apellido);
+            preparestatement.setString(1, nombre);
+            preparestatement.setString(2, apellido);
+            
+            
+            Alumno alumno = new Alumno();
+            
+            int affectedRows = preparestatement.executeUpdate();
 
-            preparestatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = preparestatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                	alumno.setApellido(apellido);
+                    alumno.setNombre(nombre);
+                    
+                    alumno.setIdAlumno(generatedKeys.getInt(1));
+                    return alumno;
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
 
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            throw e;
         }
 
     }
@@ -123,11 +142,6 @@ public class StudentManager {
         return null; 
     }
     
-    public int generarCodigo(){
-        UUID uuid = UUID.randomUUID();
-        int codigo = uuid.hashCode();
-        return codigo; 
-    }
 
 }
 

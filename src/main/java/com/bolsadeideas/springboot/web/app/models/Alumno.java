@@ -3,11 +3,18 @@ package com.bolsadeideas.springboot.web.app.models;
 
 import java.io.Serializable;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class Alumno implements Serializable {
 
+		
 		private static final long serialVersionUID = 1L;
+		@NotNull
 		private int idAlumno;
+		@NotEmpty
 		private String nombre;
+		@NotEmpty
 		private String apellido;
 		
 		public Alumno() {

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class ConfigManager {
 	public static void main(String[] args) {
-		String username = new ConfigManager().getPropValues("db_alumnos");
+		String username = new ConfigManager().getPropValues("db_alumnos2");
 		System.out.println("KeyConfig:" + username);
 	}
 

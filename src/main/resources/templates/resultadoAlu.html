@@ -6,9 +6,10 @@
 	<title th:text="${titulo}"></title>
 </head>
 <body>
-	<h3>Alumno Agregado</h3>
+	<h3 th:text="${titulo}"></h3>
 	<ul>
-		<li th:text="${alumno.nombre}"></li>
+		<li th:text="${alumno.idAlumno}"></li>
+		<li th:text="${alumno.nombre}"></li>	
 		<li th:text="${alumno.apellido}"></li>
 	</ul>
 </body>
