@@ -63,12 +63,15 @@ public class StudentController {
 				errores.put(err.getField(), "El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
 			});
 
-			model.addAttribute("titulo", "Agregado Alumno");
+			model.addAttribute("titulo", "Falta datos");
 			model.addAttribute("error", errores); 
 			return "agregarAlumno"; 
 		}
 		StudentManager studentManager = new StudentManager();
 		alumno = studentManager.add(nombre, apellido);
+		model.addAttribute("idalumno", "IdAlumno");
+		model.addAttribute("nombre", "Nombre");
+		model.addAttribute("apellido", "Apellido");
 		model.addAttribute("titulo", "Alumno Agregado"); 
 		model.addAttribute("alumno", alumno); 
 		return "resultadoAlu";
@@ -85,7 +88,7 @@ public class StudentController {
 	
 	@PostMapping("/modificarAlumno")
 	public String modificar(@Valid Alumno alumno, BindingResult result, Model model,
-			@RequestParam(name= "idAlumno") int idAlumno, 
+			@RequestParam(name="idAlumno") int idAlumno, 
 			@RequestParam(name="nombre") String nombre,
 			@RequestParam String apellido) { 
 		if(result.hasErrors()) {
@@ -102,6 +105,9 @@ public class StudentController {
 		alumno.setIdAlumno(idAlumno);
 		alumno.setNombre(nombre);
 		alumno.setApellido(apellido); 
+		model.addAttribute("idalumno", "IdAlumno");
+		model.addAttribute("nombre", "Nombre");
+		model.addAttribute("apellido", "Apellido");
 		model.addAttribute("titulo", "Alumno Modificado"); 
 		model.addAttribute("alumno", alumno); 
 		return "resultadoAlu";
@@ -117,23 +123,24 @@ public class StudentController {
 	
 	@PostMapping("/buscarAlumno")
 	public String buscar(@Valid Alumno alumno, BindingResult result, Model model,
-			@RequestParam(name= "idAlumno") int idAlumno) { 
+			@RequestParam(name= "idAlumno") int idAlumno) throws SQLException { 
 		
-		if(result.hasErrors()) {
+		if(idAlumno==0) {
 			Map<String, String> errores = new HashMap<>();
 			result.getFieldErrors().forEach(err ->{
 				errores.put(err.getField(), "El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
 			});
-			StudentManager studentManager = new StudentManager();
-			alumno = studentManager.getByid(idAlumno);  
-			model.addAttribute("alumno", alumno);
-			model.addAttribute("titulo", "Encontrado");
-			model.addAttribute("error", errores); 
-			return "resultadoAlu"; 
+			model.addAttribute("titulo", "Debe ser numero entero");
+			model.addAttribute("error", errores);
+			return "buscarAlumno";
 		}
-		
-		model.addAttribute("titulo", "Alumno Encontrado"); 
-		model.addAttribute("alumno", alumno); 
+		StudentManager studentManager = new StudentManager();
+		alumno = studentManager.getByid(idAlumno);
+		model.addAttribute("idalumno", "IdAlumno");
+		model.addAttribute("nombre", "Nombre");
+		model.addAttribute("apellido", "Apellido");
+		model.addAttribute("titulo", "Alumno Encontrado");
+		model.addAttribute("alumno", alumno);
 		return "resultadoAlu";
 		
 	}

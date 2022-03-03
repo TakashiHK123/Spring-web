@@ -12,9 +12,9 @@
 		<div>
 			<label for="idAlumno">ID Alumno</label>
 			<div>
-				<input type="text" id="idAlumno" th:field="${alumno.idAlumno}">
+				<input type="number" name="idAlumno" id="idAlumno" th:value="${alumno.idAlumno}">
 			</div>
-			<div th:if="${#fields.hasErrors('idAlumno')}" th:errors="${idAlumno}"></div>
+			<div th:if="${error != null && error.('idAlumno')}" th:text="${error.idAlumno}"></div>
 		</div>
 		<div>
 			<div>
@@ -23,5 +23,4 @@
 		</div>
 	</form>
 </body>
-
 </html>
