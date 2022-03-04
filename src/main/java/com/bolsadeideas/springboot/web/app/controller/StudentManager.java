@@ -50,8 +50,7 @@ public class StudentManager {
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement preparestatement = conn.prepareStatement(SQL_INSERT,
                         Statement.RETURN_GENERATED_KEYS)) {
-        	
-        	StudentManager studentManager = new StudentManager(); 
+
             preparestatement.setString(1, nombre);
             preparestatement.setString(2, apellido);
             
