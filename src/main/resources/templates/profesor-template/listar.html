@@ -20,10 +20,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="profesores: ${profesores}">
-				<td th:text="${profesores.idProfesor}"></td>
-				<td th:text="${profesores.nombre}"></td>
-				<td th:text="${profesores.apellido}"></td>
+			<tr th:each="profesor: ${profesores}">
+				<td th:text="${profesor.idProfesor}"></td>
+				<td th:text="${profesor.nombre}"></td>
+				<td th:text="${profesor.apellido}"></td>
 			</tr>
 		</tbody>
 	</table>

@@ -1,6 +1,6 @@
 package com.bolsadeideas.springboot.web.app.controller;
 import java.sql.SQLException;
-import java.util.*;
+
 import com.bolsadeideas.springboot.web.app.models.Profesor;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -24,15 +24,14 @@ public class ProfessorController {
     @GetMapping("/listar")
     public String listaProfe(Model model) {
         ProfessorManager professorManager = new ProfessorManager();
-        List<Profesor> profesores = new ArrayList<>();
-        profesores = professorManager.getAllProfessor();
+        List<Profesor> profesores = professorManager.getAllProfessor();
         model.addAttribute("titulo", "Lista de Profesores");
         model.addAttribute("mensaje", "Lista de profesores");
         model.addAttribute("idprofesor", "idProfesor");
         model.addAttribute("nombre", "Nombre");
         model.addAttribute("apellido", "Apellido");
         model.addAttribute("profesores", profesores);
-        return "profesor-template/listarProfesores";
+        return "profesor-template/listar";
     }
 
     @GetMapping("/agregar")
@@ -77,7 +76,7 @@ public class ProfessorController {
 
     @PostMapping("/buscar")
     public String buscarProfePro(@Valid Profesor profesor, BindingResult result, Model model,
-                            @RequestParam(name= "idProfesor") int idProfesor) throws SQLException {
+                            @RequestParam(name= "idprofesor") int idProfesor) throws SQLException {
 
         if(result.hasGlobalErrors()) {
             Map<String, String> errores = new HashMap<>();
@@ -95,7 +94,7 @@ public class ProfessorController {
         model.addAttribute("apellido", "Apellido");
         model.addAttribute("titulo", "Profesor Encontrado");
         model.addAttribute("profesor", profesor);
-        return "profesor-template/resultadoAlu";
+        return "profesor-template/resultadoProfe";
 
     }
     @GetMapping("/modificar")
@@ -109,7 +108,7 @@ public class ProfessorController {
 
     @PostMapping("/modificar")
     public String modificar(@Valid Profesor profesor, BindingResult result, Model model,
-                            @RequestParam(name="idProfesor") int idProfesor,
+                            @RequestParam(name="idprofesor") int idProfesor,
                             @RequestParam(name="nombre") String nombre,
                             @RequestParam String apellido) {
         model.addAttribute("titulo", "Falta datos");
@@ -124,14 +123,14 @@ public class ProfessorController {
         }
         ProfessorManager profesorManager = new ProfessorManager();
         profesorManager.modify(idProfesor, nombre, apellido);
-        profesor.setidProfesor(idProfesor);
+        profesor.setIdProfesor(idProfesor);
         profesor.setNombre(nombre);
         profesor.setApellido(apellido);
         model.addAttribute("idprofesor", "IdProfesor");
         model.addAttribute("nombre", "Nombre");
         model.addAttribute("apellido", "Apellido");
         model.addAttribute("profesor", profesor);
-        return "profesor-template/resultadoAlu";
+        return "profesor-template/resultadoProfe";
     }
 
 }

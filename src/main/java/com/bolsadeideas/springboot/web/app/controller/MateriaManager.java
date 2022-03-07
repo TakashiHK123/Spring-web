@@ -1,6 +1,6 @@
 package com.bolsadeideas.springboot.web.app.controller;
 
-import com.bolsadeideas.springboot.web.app.models.Profesor;
+import com.bolsadeideas.springboot.web.app.models.Materia;
 import com.bolsadeideas.springboot.web.app.utils.ConnectionManager;
 
 import java.sql.*;
@@ -8,30 +8,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ProfessorManager {
+public class MateriaManager {
 
-    private static final String SQL_INSERT = "INSERT INTO profesor (nombre, apellido) VALUES (?, ?)";
-    private static final String SQL = "SELECT * FROM profesor";
-    private static final String SQL_DELETE = "DELETE FROM profesor WHERE idprofesor=?";
-    private static final String SQL_MODIFY = "UPDATE profesor SET nombre=?, SET apellido=? WHERE idprofesor=?";
+    private static final String SQL_INSERT = "INSERT INTO materia (descripcion) VALUES (?)";
+    private static final String SQL = "SELECT * FROM materia";
+    private static final String SQL_DELETE = "DELETE FROM materia WHERE idmateria=?";
+    private static final String SQL_MODIFY = "UPDATE materia SET descripcion=? WHERE idmateria=?";
 
-    public List<Profesor> getAllProfessor() {
+
+    public List<Materia> getAll() {
 
         try (Connection conn = ConnectionManager.getConnection();
              Statement statement = conn.createStatement()) {
-            List<Profesor> listaProfes = new ArrayList<>();
+            List<Materia> lista = new ArrayList<>();
 
             ResultSet resultSet = statement.executeQuery(SQL);
 
             while (resultSet.next()) {
-                Profesor profe = new Profesor();
-                profe.setIdProfesor(resultSet.getInt("idprofesor"));
-                profe.setNombre(resultSet.getString("nombre"));
-                profe.setApellido(resultSet.getString("apellido"));
-                listaProfes.add(profe);
+                Materia materia = new Materia();
+                materia.setIdmateria(resultSet.getInt("idmateria"));
+                materia.setDescripcion(resultSet.getString("descripcion"));
+
+                lista.add(materia);
             }
             resultSet.close();
-            return listaProfes;
+            return lista;
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         }
@@ -39,16 +40,16 @@ public class ProfessorManager {
         return Collections.EMPTY_LIST;
     }
 
-    public Profesor add(String nombre, String apellido) throws SQLException {
+    public Materia add(String descripcion) throws SQLException {
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement preparestatement = conn.prepareStatement(SQL_INSERT,
                      Statement.RETURN_GENERATED_KEYS)) {
 
-            preparestatement.setString(1, nombre);
-            preparestatement.setString(2, apellido);
+            preparestatement.setString(1, descripcion);
 
-            Profesor profe = new Profesor();
+
+            Materia materia = new Materia();
 
             int affectedRows = preparestatement.executeUpdate();
 
@@ -59,11 +60,10 @@ public class ProfessorManager {
             try (ResultSet generatedKeys = preparestatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
 
-                    profe.setApellido(apellido);
-                    profe.setNombre(nombre);
+                    materia.setDescripcion(descripcion);
+                    materia.setIdmateria(generatedKeys.getInt(1));
 
-                    profe.setIdProfesor(generatedKeys.getInt(1));
-                    return profe;
+                    return materia;
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
@@ -75,12 +75,12 @@ public class ProfessorManager {
 
     }
 
-    public void delete(int idProfe) {
+    public void delete(int idmateria) {
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement preparestatement = conn.prepareStatement(SQL_DELETE)) {
 
-            preparestatement.setInt(1, idProfe);
+            preparestatement.setInt(1, idmateria);
 
             preparestatement.executeUpdate();
 
@@ -90,13 +90,12 @@ public class ProfessorManager {
 
     }
 
-    public void modify(int idProfe, String nombre, String apellido){
+    public void modify(int idmateria, String descripcion){
         try(Connection conn = ConnectionManager.getConnection();
             PreparedStatement preparestatement = conn.prepareStatement(SQL_MODIFY)){
 
-            preparestatement.setString(1, nombre);
-            preparestatement.setString(2, apellido);
-            preparestatement.setInt(3, idProfe);
+            preparestatement.setString(1, descripcion);
+            preparestatement.setInt(2, idmateria);
 
             preparestatement.executeUpdate();
 
@@ -106,7 +105,7 @@ public class ProfessorManager {
         }
     }
 
-    public Profesor getByid(int idProfesor) throws SQLException {
+    public Materia getByid(int idmateria) {
 
         try (Connection conn = ConnectionManager.getConnection();
              Statement statement = conn.createStatement()) {
@@ -115,15 +114,12 @@ public class ProfessorManager {
 
             while (resultSet.next()) {
 
-                if (resultSet.getInt("idprofesor")==idProfesor){
-
-                    Profesor profesor = new Profesor();
-                    profesor.setIdProfesor(resultSet.getInt("idprofesor"));
-                    profesor.setNombre(resultSet.getString("nombre"));
-                    profesor.setNombre(resultSet.getString("apellido"));
-
+                if (resultSet.getInt("idmateria")==idmateria){
+                    Materia materia = new Materia();
+                    materia.setIdmateria(resultSet.getInt("idmateria"));
+                    materia.setDescripcion(resultSet.getString("descripcion"));
                     resultSet.close();
-                    return profesor;
+                    return materia;
                 }
 
             }
@@ -131,9 +127,7 @@ public class ProfessorManager {
 
         } catch (SQLException e) {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-            throw e;
         }
         return null;
     }
 }
-

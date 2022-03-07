@@ -1,9 +1,10 @@
 package com.bolsadeideas.springboot.web.app.models;
+import java.io.Serializable;
 
 import jakarta.validation.constraints.NotEmpty;
 import org.jetbrains.annotations.NotNull;
 
-public class Profesor {
+public class Profesor implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @NotNull
@@ -16,17 +17,17 @@ public class Profesor {
     public Profesor() {
     }
 
-    public Profesor(@NotNull int idProfesor, String nombre, String apellido) {
+    public Profesor(int idProfesor, String nombre, String apellido) {
         this.idProfesor = idProfesor;
         this.nombre = nombre;
         this.apellido = apellido;
     }
 
-    public int getidProfesor() {
+    public int getIdProfesor() {
         return idProfesor;
     }
 
-    public void setidProfesor(int idProfesor) {
+    public void setIdProfesor(int idProfesor) {
         this.idProfesor = idProfesor;
     }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+</head>
+
+<body>
+	<h1 th:text="${titulo}"></h1>
+
+	<div th:if="${cuentas.isEmpty()}">No hay cuentas en la lista!</div>
+	<table th:if="${not cuentas.isEmpty()}">
+		<thead>
+			<tr>
+				<th th:text="${idcuenta}"></th>
+				<th th:text="${idinscripcion}"></th>
+				<th th:text="${fecha}"></th>
+				<th th:text="${fechavencimiento}"></th>
+				<th th:text="${monto}"></th>
+				<th th:text="${pagos}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cuentas: ${cuentas}">
+				<td th:text="${cuentas.idcuenta}"></td>
+				<td th:text="${cuentas.idinscripcion}"></td>
+				<td th:text="${cuentas.fecha}"></td>
+				<td th:text="${cuentas.fechavencimiento}"></td>
+				<td th:text="${cuentas.monto}"></td>
+				<td th:text="${cuentas.pagos}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>
