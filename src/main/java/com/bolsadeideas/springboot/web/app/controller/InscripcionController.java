@@ -20,7 +20,7 @@ import java.util.*;
 public class InscripcionController {
 
     @GetMapping("/listar")
-    public String listar(Model model) {
+    public String listarInscripcion(Model model) {
         InscripcionManager inscripcionManager = new InscripcionManager();
         List<Inscripcion> inscripciones = inscripcionManager.getAll();
         model.addAttribute("titulo", "Lista de Inscripciones");
@@ -55,9 +55,7 @@ public class InscripcionController {
         }
         InscripcionManager inscripcionManager = new InscripcionManager();
         CuentaManager cuentaManager = new CuentaManager();
-
         inscripcion = inscripcionManager.add(idcursohabilitado, idalumno);  //Agregamos inscripcion
-
         Timestamp date = new Timestamp(0);
         date = cuentaManager.sacarFecha();
         Timestamp date1 = new Timestamp(0);
@@ -135,7 +133,7 @@ public class InscripcionController {
         InscripcionManager inscripcionManager = new InscripcionManager();
         inscripcionManager.modify(idinscripcion, idcursohabilitado, idalumno);
         inscripcion.setIdinscripcion(idinscripcion);
-        inscripcion.setidcursohabilitado(idcursohabilitado);
+        inscripcion.setIdcursohabilitado(idcursohabilitado);
         inscripcion.setIdalumno(idalumno);
         model.addAttribute("idinscripcion", "idinscripcion");
         model.addAttribute("idcursohabilitado", "idcursohabilitado");

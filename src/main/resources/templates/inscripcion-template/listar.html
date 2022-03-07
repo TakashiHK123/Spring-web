@@ -20,10 +20,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="inscripciones: ${inscripciones}">
-				<td th:text="${inscripciones.idinscripcion}"></td>
-				<td th:text="${inscripciones.idcursohabilitado}"></td>
-				<td th:text="${inscripciones.idalumno}"></td>
+
+			<tr th:each="inscripcion: ${inscripciones}">
+				<td th:text="${inscripcion.idinscripcion}"></td>
+				<td th:text="${inscripcion.idcursohabilitado}"></td>
+				<td th:text="${inscripcion.idalumno}"></td>
 			</tr>
 		</tbody>
 	</table>

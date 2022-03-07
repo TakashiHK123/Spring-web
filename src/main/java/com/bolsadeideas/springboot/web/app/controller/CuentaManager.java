@@ -11,7 +11,7 @@ import java.util.Date;
 import java.sql.Timestamp;
 public class CuentaManager {
 
-    private static final String SQL_INSERT = "INSERT INTO cuenta (idinscripcion, fecha, fechavencimiento) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO cuenta (idinscripcion, monto, fecha, pagos, fechavencimiento) VALUES (?,?,?,?,?)";
     private static final String SQL = "SELECT * FROM cuenta";
     private static final String SQL_DELETE = "DELETE FROM cuenta WHERE idcuenta=?";
     private static final String SQL_MODIFY = "UPDATE cuenta SET monto=?, fecha=?, pagos=? WHERE idcuenta=?";

@@ -27,7 +27,7 @@ public class InscripcionManager {
             while (resultSet.next()) {
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdinscripcion(resultSet.getInt("idinscripcion"));
-                inscripcion.setidcursohabilitado(resultSet.getInt("idcursohabilitado"));
+                inscripcion.setIdcursohabilitado(resultSet.getInt("idcursohabilitado"));
                 inscripcion.setIdalumno(resultSet.getInt("idalumno"));
                 lista.add(inscripcion);
             }
@@ -60,7 +60,7 @@ public class InscripcionManager {
             try (ResultSet generatedKeys = preparestatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
 
-                    inscripcion.setidcursohabilitado(idcursohabilitado);
+                    inscripcion.setIdcursohabilitado(idcursohabilitado);
                     inscripcion.setIdalumno(idalumno);
 
                     inscripcion.setIdinscripcion(generatedKeys.getInt(1));
@@ -119,7 +119,7 @@ public class InscripcionManager {
                 if (resultSet.getInt("idinscripcion")==idinscripcion){
                     Inscripcion inscripcion = new Inscripcion();
                     inscripcion.setIdinscripcion(resultSet.getInt("idinscripcion"));
-                    inscripcion.setidcursohabilitado(resultSet.getInt("idcursohabilitado"));
+                    inscripcion.setIdcursohabilitado(resultSet.getInt("idcursohabilitado"));
                     inscripcion.setIdalumno(resultSet.getInt("idalumno"));
                     resultSet.close();
                     return inscripcion;

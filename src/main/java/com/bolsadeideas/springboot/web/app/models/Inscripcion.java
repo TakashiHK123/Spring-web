@@ -32,11 +32,11 @@ public class Inscripcion implements Serializable {
         this.idinscripcion = idinscripcion;
     }
 
-    public int getidcursohabilitado() {
+    public int getIdcursohabilitado() {
         return idcursohabilitado;
     }
 
-    public void setidcursohabilitado(int idcursohabilitado) {
+    public void setIdcursohabilitado(int idcursohabilitado) {
         this.idcursohabilitado = idcursohabilitado;
     }
 
